@@ -11,7 +11,7 @@ class Game {
     }
 
     public generateHand() {
-        // repeat function instead of loop
+        // repeat function instead of loop?
         for (let i = 0; i < this.getCardNumberFromValue(Game.roundNumber); i++) {
             this.hand.push(this.getNewCard());
         }
