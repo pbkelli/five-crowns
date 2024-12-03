@@ -1,31 +1,42 @@
-import {Suit, Value} from "./CardDetails";
+import { SUIT, VALUE } from "./CardDetails";
 
-class Card {
-    private _value: Value;
-    private _suit: Suit;
-    private _isWild: boolean;
+export class Card {
+  private _suit: SUIT;
+  private _value: VALUE;
+  private _isWild: boolean;
 
-    get isWild() {
-        return this._isWild;
-    }
+  // probably get rid of the setters
+  constructor(
+    private cardSuit: SUIT,
+    private cardValue: VALUE,
+    private isCardWild = false,
+  ) {
+    this._suit = cardSuit;
+    this._value = cardValue;
+    this._isWild = isCardWild;
+  }
 
-    set isWild(value) {
-        this._isWild = value;
-    }
+  get isWild() {
+    return this._isWild;
+  }
 
-    get suit() {
-        return this._suit;
-    }
+  set isWild(value) {
+    this._isWild = value;
+  }
 
-    set suit(value) {
-        this._suit = value;
-    }
+  get suit() {
+    return this._suit;
+  }
 
-    get value() {
-        return this._value;
-    }
+  set suit(value) {
+    this._suit = value;
+  }
 
-    set value(value) {
-        this._value = value;
-    }
+  get value() {
+    return this._value;
+  }
+
+  set value(value) {
+    this._value = value;
+  }
 }
