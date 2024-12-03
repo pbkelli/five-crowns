@@ -1,6 +1,6 @@
 import {Card} from "./Card";
 import {SUIT, VALUE} from "./CardDetails";
-import {sample, values} from "lodash";
+import {sample} from "lodash";
 
 class Game {
     private static roundNumber: VALUE;
@@ -11,16 +11,12 @@ class Game {
     }
 
     public generateHand() {
-        const hand: Card[] = [];
         // repeat function instead of loop
-        for (let i = 0; i < this.cardValueToNumber(Game.roundNumber); i++) {
-            hand.push(this.getNewCard());
+        for (let i = 0; i < this.getCardNumberFromValue(Game.roundNumber); i++) {
+            this.hand.push(this.getNewCard());
         }
 
-        return hand;
-
-        // generate random round number (or use entry)
-        // generate num of cards
+        return this.hand;
     }
 
     private getNewCard() {
@@ -31,7 +27,7 @@ class Game {
         return new Card(suit, value, Game.roundNumber === value);
     }
 
-    private cardValueToNumber(value: VALUE): number {
+    private getCardNumberFromValue(value: VALUE): number {
         switch (value) {
             case VALUE.THREE:
                 return 3;
