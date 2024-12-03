@@ -1,9 +1,16 @@
 import {Suit, Value} from "./CardDetails";
 
-class Card {
-    private _value: Value;
+export class Card {
     private _suit: Suit;
+    private _value: Value;
     private _isWild: boolean;
+
+    // probably get rid of the setters
+    constructor(private cardSuit: Suit, private cardValue: Value, private isCardWild = false) {
+        this._suit = cardSuit;
+        this._value = cardValue;
+        this._isWild = isCardWild;
+    }
 
     get isWild() {
         return this._isWild;
