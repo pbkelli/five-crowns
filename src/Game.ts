@@ -1,6 +1,6 @@
 import { Card } from "./Card";
 import { SUIT, VALUE } from "./CardDetails";
-import { sample } from "lodash";
+import { every, sample, sortBy } from "lodash";
 
 export class Game {
   private static roundNumber;
@@ -30,6 +30,38 @@ export class Game {
     const card = new Card(suit, value, Game.roundNumber === value);
     console.log(`${card}${value === Game.roundNumber ? " - W" : ""}`);
     return card;
+  }
+
+  // also static?
+  private goOut() {}
+
+  private isSequentialRun(cards: Card[]): boolean {
+    if (cards.length < 3) {
+      return false;
+    }
+    if (!every(cards, "suit")) {
+      return false;
+    }
+
+    const sorted = sortBy(cards, "value");
+    const allValues = Object.keys(VALUE);
+
+    let first = sorted.pop();
+    let idx = allValues.indexOf(first.value);
+    while (sorted.length) {
+      const next = sorted.pop();
+      if (next.value !== allValues[idx + 1]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private isMatchingRun(cards: Card[]): boolean {
+    if (cards.length < 3) {
+      return false;
+    }
+    return every(cards, "value");
   }
 
   private getCardNumberFromValue(value: VALUE): number {
