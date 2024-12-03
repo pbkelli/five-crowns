@@ -16,6 +16,10 @@ export class Card {
     this._isWild = isCardWild;
   }
 
+  toString() {
+    return `${this._value} ${this.suit}`;
+  }
+
   get isWild() {
     return this._isWild;
   }

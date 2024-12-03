@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "npm run build && node .build/index.js",
     "restart": "npm run build && npm run start",
-    "prettier": "npx prettier -w src/**/*.ts"
+    "prettier": "npx prettier -w src/**/*.ts",
+    "package": "nexe .build/index.js -o my-app --build"
   },
   "author": "Kelli",
   "license": "ISC",

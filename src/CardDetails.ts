@@ -1,9 +1,9 @@
 export enum SUIT {
-  CLUB = "CLUB",
-  HEART = "HEART",
-  SPADE = "SPADE",
-  STAR = "STAR",
-  DIAMOND = "DIAMOND",
+  CLUB = "oOo",
+  HEART = "<3",
+  SPADE = "^",
+  STAR = "*",
+  DIAMOND = "<>",
 }
 
 export enum VALUE {
