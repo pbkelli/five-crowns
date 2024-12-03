@@ -18,7 +18,7 @@ export class Game {
       this.hand.push(this.getNewCard());
     }
 
-    console.log(this.hand);
+    // console.log(`${this.hand}`);
     return this.hand;
   }
 
@@ -27,7 +27,9 @@ export class Game {
     const value = sample(VALUE);
 
     // todo remove above vars
-    return new Card(suit, value, Game.roundNumber === value);
+    const card = new Card(suit, value, Game.roundNumber === value);
+    console.log(`${card}${value === Game.roundNumber ? "*" : ""}`);
+    return card;
   }
 
   private getCardNumberFromValue(value: VALUE): number {
