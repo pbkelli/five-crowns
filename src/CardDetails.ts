@@ -1,4 +1,4 @@
-export enum Suit {
+export enum SUIT {
     CLUB = "CLUB",
     HEART = "HEART",
     SPADE = "SPADE",
@@ -6,7 +6,7 @@ export enum Suit {
     DIAMOND = "DIAMOND"
 }
 
-export enum Value {
+export enum VALUE {
     THREE = "THREE",
     FOUR = "FOUR",
     FIVE = "FIVE",
