@@ -28,7 +28,7 @@ export class Game {
 
     // todo remove above vars
     const card = new Card(suit, value, Game.roundNumber === value);
-    console.log(`${card}${value === Game.roundNumber ? "*" : ""}`);
+    console.log(`${card}${value === Game.roundNumber ? " - W" : ""}`);
     return card;
   }
 

@@ -17,7 +17,7 @@ export class Card {
   }
 
   toString() {
-    return `${this._value}/${this.suit}`;
+    return `${this._value} ${this.suit}`;
   }
 
   get isWild() {
