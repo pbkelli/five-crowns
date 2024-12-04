@@ -15,7 +15,7 @@ export class Game {
   public dealHand() {
     const hand = [];
     // repeat function instead of loop?
-    for (let i = 0; i < this.getCardNumberFromValue(Game.roundNumber); i++) {
+    for (let i = 0; i < Card.getCardNumberFromValue(Game.roundNumber); i++) {
       hand.push(this.getNewCard());
     }
 
@@ -34,7 +34,7 @@ export class Game {
   // also static?
   private goOut() {}
 
-  private isSequentialRun(cards: Card[]): boolean {
+  public isSequentialRun(cards: Card[]): boolean {
     if (cards.length < 3) {
       return false;
     }
@@ -42,16 +42,16 @@ export class Game {
       return false;
     }
 
-    const sorted = sortBy(cards, "value");
-    const allValues = Object.keys(VALUE);
+    const sorted = sortBy(cards, "_value");
 
-    let first = sorted.pop();
-    let idx = allValues.indexOf(first.value);
+    let prev = sorted.shift();
     while (sorted.length) {
-      const next = sorted.pop();
-      if (next.value !== allValues[idx + 1]) {
+      const next = sorted.shift();
+
+      if (next.value !== prev.value + 1) {
         return false;
       }
+      prev = next;
     }
     return true;
   }
@@ -61,32 +61,5 @@ export class Game {
       return false;
     }
     return cards.every((card) => card.value === cards[0].value);
-  }
-
-  private getCardNumberFromValue(value: VALUE): number {
-    switch (value) {
-      case VALUE.THREE:
-        return 3;
-      case VALUE.FOUR:
-        return 4;
-      case VALUE.FIVE:
-        return 5;
-      case VALUE.SIX:
-        return 6;
-      case VALUE.SEVEN:
-        return 7;
-      case VALUE.EIGHT:
-        return 8;
-      case VALUE.NINE:
-        return 9;
-      case VALUE.TEN:
-        return 10;
-      case VALUE.JACK:
-        return 11;
-      case VALUE.QUEEN:
-        return 12;
-      case VALUE.KING:
-        return 13;
-    }
   }
 }

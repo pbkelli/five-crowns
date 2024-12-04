@@ -2,7 +2,7 @@ import { SUIT, VALUE } from "./CardDetails";
 
 export class Card {
   private _suit: SUIT;
-  private _value: VALUE;
+  private _value: number;
   private _isWild: boolean;
 
   // probably get rid of the setters
@@ -12,12 +12,39 @@ export class Card {
     private isCardWild = false,
   ) {
     this._suit = cardSuit;
-    this._value = cardValue;
+    this._value = Card.getCardNumberFromValue(cardValue);
     this._isWild = isCardWild;
   }
 
   toString() {
-    return `${this._value} ${this.suit} `;
+    return `${this.cardValue} ${this.suit} `;
+  }
+
+  public static getCardNumberFromValue(value: VALUE): number {
+    switch (value) {
+      case VALUE.THREE:
+        return 3;
+      case VALUE.FOUR:
+        return 4;
+      case VALUE.FIVE:
+        return 5;
+      case VALUE.SIX:
+        return 6;
+      case VALUE.SEVEN:
+        return 7;
+      case VALUE.EIGHT:
+        return 8;
+      case VALUE.NINE:
+        return 9;
+      case VALUE.TEN:
+        return 10;
+      case VALUE.JACK:
+        return 11;
+      case VALUE.QUEEN:
+        return 12;
+      case VALUE.KING:
+        return 13;
+    }
   }
 
   get isWild() {
