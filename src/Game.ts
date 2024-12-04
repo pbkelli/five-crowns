@@ -1,6 +1,6 @@
 import { Card } from "./Card";
 import { SUIT, VALUE } from "./CardDetails";
-import { sample } from "lodash";
+import { every, sample, sortBy } from "lodash";
 
 export class Game {
   private static roundNumber;
@@ -9,53 +9,57 @@ export class Game {
 
   constructor(private _roundNumber?: VALUE) {
     Game.roundNumber = _roundNumber ?? sample(VALUE);
-    console.log("Round number", Game.roundNumber);
+    this.hand = this.dealHand();
   }
 
-  public getNewHand() {
+  public dealHand() {
+    const hand = [];
     // repeat function instead of loop?
-    for (let i = 0; i < this.getCardNumberFromValue(Game.roundNumber); i++) {
-      this.hand.push(this.getNewCard());
+    for (let i = 0; i < Card.getCardNumberFromValue(Game.roundNumber); i++) {
+      hand.push(this.getNewCard());
     }
 
-    // console.log(`${this.hand}`);
-    return this.hand;
+    return hand;
   }
 
-  private getNewCard() {
-    const suit = sample(SUIT);
-    const value = sample(VALUE);
+  public getNewCard(_suit?: SUIT, _value?: VALUE) {
+    const value: VALUE = _value ?? (sample(VALUE) as VALUE);
+    const suit: SUIT = _suit ?? (sample(SUIT) as SUIT);
 
-    // todo remove above vars
     const card = new Card(suit, value, Game.roundNumber === value);
-    console.log(`${card}${value === Game.roundNumber ? " - W" : ""}`);
+    // console.log(`${card}${value === Game.roundNumber ? " - W" : ""}`);
     return card;
   }
 
-  private getCardNumberFromValue(value: VALUE): number {
-    switch (value) {
-      case VALUE.THREE:
-        return 3;
-      case VALUE.FOUR:
-        return 4;
-      case VALUE.FIVE:
-        return 5;
-      case VALUE.SIX:
-        return 6;
-      case VALUE.SEVEN:
-        return 7;
-      case VALUE.EIGHT:
-        return 8;
-      case VALUE.NINE:
-        return 9;
-      case VALUE.TEN:
-        return 10;
-      case VALUE.JACK:
-        return 11;
-      case VALUE.QUEEN:
-        return 12;
-      case VALUE.KING:
-        return 13;
+  // also static?
+  private goOut() {}
+
+  public isSequentialRun(cards: Card[]): boolean {
+    if (cards.length < 3) {
+      return false;
     }
+    if (!every(cards, "suit")) {
+      return false;
+    }
+
+    const sorted = sortBy(cards, "_value");
+
+    let prev = sorted.shift();
+    while (sorted.length) {
+      const next = sorted.shift();
+
+      if (next.value !== prev.value + 1) {
+        return false;
+      }
+      prev = next;
+    }
+    return true;
+  }
+
+  public isMatchingRun(cards: Card[] = this.hand): boolean {
+    if (cards.length < 3) {
+      return false;
+    }
+    return cards.every((card) => card.value === cards[0].value);
   }
 }
