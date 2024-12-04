@@ -19,16 +19,15 @@ export class Game {
       hand.push(this.getNewCard());
     }
 
-    // console.log(`${this.hand}`);
     return hand;
   }
 
-  public getNewCard(_value?: VALUE, _suit?: SUIT) {
+  public getNewCard(_suit?: SUIT, _value?: VALUE) {
     const value: VALUE = _value ?? (sample(VALUE) as VALUE);
     const suit: SUIT = _suit ?? (sample(SUIT) as SUIT);
 
     const card = new Card(suit, value, Game.roundNumber === value);
-    console.log(`${card}${value === Game.roundNumber ? " - W" : ""}`);
+    // console.log(`${card}${value === Game.roundNumber ? " - W" : ""}`);
     return card;
   }
 
@@ -61,7 +60,7 @@ export class Game {
     if (cards.length < 3) {
       return false;
     }
-    return every(cards, "value");
+    return cards.every((card) => card.value === cards[0].value);
   }
 
   private getCardNumberFromValue(value: VALUE): number {
