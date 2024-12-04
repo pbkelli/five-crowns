@@ -68,5 +68,41 @@ describe("testing checks", () => {
 
       expect(isMatchingRun).toBeTruthy();
     });
+
+    it("A run of 5 sequential cards returns true", () => {
+      const hand = [
+        new Card(SUIT.DIAMOND, VALUE.SIX),
+        new Card(SUIT.DIAMOND, VALUE.FOUR),
+        new Card(SUIT.DIAMOND, VALUE.SEVEN),
+        new Card(SUIT.DIAMOND, VALUE.EIGHT),
+        new Card(SUIT.DIAMOND, VALUE.FIVE),
+      ];
+      const isMatchingRun = game.isSequentialRun(hand);
+      console.log(hand, isMatchingRun);
+
+      expect(isMatchingRun).toBeTruthy();
+    });
+    it("A run of 3 non sequential cards returns false", () => {
+      const hand = [
+        new Card(SUIT.DIAMOND, VALUE.NINE),
+        new Card(SUIT.DIAMOND, VALUE.FOUR),
+        new Card(SUIT.DIAMOND, VALUE.SEVEN),
+      ];
+      const isMatchingRun = game.isSequentialRun(hand);
+      console.log(hand, isMatchingRun);
+
+      expect(isMatchingRun).toBeFalsy();
+    });
+    it("A run of 3 sequential cards with non matching suits returns false", () => {
+      const hand = [
+        new Card(SUIT.CLUB, VALUE.FOUR),
+        new Card(SUIT.DIAMOND, VALUE.FIVE),
+        new Card(SUIT.DIAMOND, VALUE.SIX),
+      ];
+      const isMatchingRun = game.isSequentialRun(hand);
+      console.log(hand, isMatchingRun);
+
+      expect(isMatchingRun).toBeTruthy();
+    });
   });
 });
