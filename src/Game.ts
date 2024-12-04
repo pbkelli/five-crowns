@@ -1,93 +1,94 @@
-import { Card } from "./Card";
-import { SUIT, VALUE } from "./CardDetails";
-import { every, sample, sortBy } from "lodash";
+import {Card} from "./Card";
+import {SUIT, VALUE} from "./CardDetails";
+import {every, sample, sortBy} from "lodash";
 
 export class Game {
-  private static roundNumber;
-  private static numberOfPlayers;
-  private hand: Card[] = [];
+    private static roundNumber;
+    private static numberOfPlayers;
+    private hand: Card[] = [];
 
-  constructor(private _roundNumber?: VALUE) {
-    Game.roundNumber = _roundNumber ?? sample(VALUE);
-    console.log("Round number", Game.roundNumber);
-  }
-
-  public getNewHand() {
-    // repeat function instead of loop?
-    for (let i = 0; i < this.getCardNumberFromValue(Game.roundNumber); i++) {
-      this.hand.push(this.getNewCard());
+    constructor(private _roundNumber?: VALUE) {
+        Game.roundNumber = _roundNumber ?? sample(VALUE);
+        console.log("Round number", Game.roundNumber);
     }
 
-    // console.log(`${this.hand}`);
-    return this.hand;
-  }
+    public getNewHand() {
+        // repeat function instead of loop?
+        for (let i = 0; i < this.getCardNumberFromValue(Game.roundNumber); i++) {
+            this.hand.push(this.getNewCard());
+        }
 
-  private getNewCard() {
-    const suit = sample(SUIT);
-    const value = sample(VALUE);
-
-    // todo remove above vars
-    const card = new Card(suit, value, Game.roundNumber === value);
-    console.log(`${card}${value === Game.roundNumber ? " - W" : ""}`);
-    return card;
-  }
-
-  // also static?
-  private goOut() {}
-
-  private isSequentialRun(cards: Card[]): boolean {
-    if (cards.length < 3) {
-      return false;
-    }
-    if (!every(cards, "suit")) {
-      return false;
+        // console.log(`${this.hand}`);
+        return this.hand;
     }
 
-    const sorted = sortBy(cards, "value");
-    const allValues = Object.keys(VALUE);
+    private getNewCard() {
+        const suit = sample(SUIT);
+        const value = sample(VALUE);
 
-    let first = sorted.pop();
-    let idx = allValues.indexOf(first.value);
-    while (sorted.length) {
-      const next = sorted.pop();
-      if (next.value !== allValues[idx + 1]) {
-        return false;
-      }
+        // todo remove above vars?
+        const card = new Card(suit, value, Game.roundNumber === value);
+        console.log(`${card}${value === Game.roundNumber ? " - W" : ""}`);
+        return card;
     }
-    return true;
-  }
 
-  private isMatchingRun(cards: Card[]): boolean {
-    if (cards.length < 3) {
-      return false;
+    // also static?
+    private goOut() {
     }
-    return every(cards, "value");
-  }
 
-  private getCardNumberFromValue(value: VALUE): number {
-    switch (value) {
-      case VALUE.THREE:
-        return 3;
-      case VALUE.FOUR:
-        return 4;
-      case VALUE.FIVE:
-        return 5;
-      case VALUE.SIX:
-        return 6;
-      case VALUE.SEVEN:
-        return 7;
-      case VALUE.EIGHT:
-        return 8;
-      case VALUE.NINE:
-        return 9;
-      case VALUE.TEN:
-        return 10;
-      case VALUE.JACK:
-        return 11;
-      case VALUE.QUEEN:
-        return 12;
-      case VALUE.KING:
-        return 13;
+    private isSequentialRun(cards: Card[]): boolean {
+        if (cards.length < 3) {
+            return false;
+        }
+        if (!every(cards, "suit")) {
+            return false;
+        }
+
+        const sorted = sortBy(cards, "value");
+        const allValues = Object.keys(VALUE);
+
+        let first = sorted.pop();
+        let idx = allValues.indexOf(first.value);
+        while (sorted.length) {
+            const next = sorted.pop();
+            if (next.value !== allValues[idx + 1]) {
+                return false;
+            }
+        }
+        return true;
     }
-  }
+
+    private isMatchingRun(cards: Card[]): boolean {
+        if (cards.length < 3) {
+            return false;
+        }
+        return every(cards, "value");
+    }
+
+    private getCardNumberFromValue(value: VALUE): number {
+        switch (value) {
+            case VALUE.THREE:
+                return 3;
+            case VALUE.FOUR:
+                return 4;
+            case VALUE.FIVE:
+                return 5;
+            case VALUE.SIX:
+                return 6;
+            case VALUE.SEVEN:
+                return 7;
+            case VALUE.EIGHT:
+                return 8;
+            case VALUE.NINE:
+                return 9;
+            case VALUE.TEN:
+                return 10;
+            case VALUE.JACK:
+                return 11;
+            case VALUE.QUEEN:
+                return 12;
+            case VALUE.KING:
+                return 13;
+        }
+    }
 }
