@@ -1,6 +1,6 @@
 {
-  "name": "five-cards",
-  "version": "1.0.1",
+  "name": "five-crowns",
+  "version": "1.0.2",
   "description": "",
   "main": ".build/index.js",
   "build": "tsc",

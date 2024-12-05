@@ -47,6 +47,33 @@ export class Card {
     }
   }
 
+  public static getCardValueFromNumber(value: number): VALUE {
+    switch (value) {
+      case 3:
+        return VALUE.THREE;
+      case 4:
+        return VALUE.FOUR;
+      case 5:
+        return VALUE.FIVE;
+      case 6:
+        return VALUE.SIX;
+      case 7:
+        return VALUE.SEVEN;
+      case 8:
+        return VALUE.EIGHT;
+      case 9:
+        return VALUE.NINE;
+      case 10:
+        return VALUE.TEN;
+      case 11:
+        return VALUE.JACK;
+      case 12:
+        return VALUE.QUEEN;
+      case 13:
+        return VALUE.KING;
+    }
+  }
+
   get isWild() {
     return this._isWild;
   }

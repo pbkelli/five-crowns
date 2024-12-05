@@ -1,0 +1,45 @@
+name: Version Check
+
+on:
+  pull_request:
+    paths:
+      - 'package.json'  # Only trigger on changes to the package.json file
+
+jobs:
+  version-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get base branch (e.g., main)
+        id: get-base
+        run: |
+          echo "BASE_BRANCH=$(jq --raw-output .pull_request.base.ref "$GITHUB_EVENT_PATH")" >> $GITHUB_ENV
+
+      - name: Fetch base branch (main/master)
+        run: |
+          git fetch origin $BASE_BRANCH
+
+      - name: Get current version in PR branch
+        id: pr_version
+        run: |
+          pr_version=$(cat package.json | jq -r .version)
+          echo "PR_VERSION=$pr_version" >> $GITHUB_ENV
+
+      - name: Get current version in base branch
+        id: base_version
+        run: |
+          git checkout $BASE_BRANCH
+          base_version=$(cat package.json | jq -r .version)
+          echo "BASE_VERSION=$base_version" >> $GITHUB_ENV
+
+      - name: Check if version is updated
+        run: |
+          if [[ "$PR_VERSION" == "$BASE_VERSION" ]]; then
+            echo "Error: The version in package.json is not updated in this PR."
+            exit 1
+          else
+            echo "Version has been updated from $BASE_VERSION to $PR_VERSION."
+          fi
